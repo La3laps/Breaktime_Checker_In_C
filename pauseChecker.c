@@ -178,7 +178,16 @@ void printTime()
             fgets(s2, 2, s2_file);
 
             // print time in minutes, hours and seconds
-            printf("\n\n\n\n\t\t\t\t  %02d : %02d : %02d\n\n\n\n\n\n\n\n", hour, min, sec);
+            printf("\n\n\n\n\t\t\t\t  %02d", hour);
+            printf("\033[1;31m");
+            printf(" : ");
+            printf("\033[0m");
+            printf("%02d", min);
+            printf("\033[0m");
+            printf("\033[1;31m");
+            printf(" : ");
+            printf("\033[0m");
+            printf("%02d\n\n\n\n\n\n\n\n", sec);
 
             if (strcmp(s1, "1") == 0)
             {
