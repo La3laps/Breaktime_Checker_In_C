@@ -80,6 +80,11 @@ void printTime()
         clear();
         createTime();
 
+        if (hour > 0 && hour < 10 && min <= 30)
+        {
+            storeSignature(1, 1);
+        }
+
         if (verifySignAM == 0 && hour == 10 && min >= 0 && min < 31)
         {
 
@@ -145,10 +150,7 @@ void printTime()
             verifySignPM = 1;
             storeSignature(1, 0);
         }
-        if (hour > 0 && hour < 10)
-        {
-            storeSignature(1, 1);
-        }
+
         else if (hour == 10 && min > 29 && min < 46 || hour == 15 && min >= 0 && min < 31)
         {
             print(1);
@@ -175,17 +177,18 @@ void printTime()
 
             // print time in minutes, hours and seconds
             printf("\n\n\n\n\t\t\t\t  %02d : %02d : %02d\n\n\n\n\n\n\n\n", hour, min, sec);
+
             if (strcmp(s1, "1") == 0)
             {
                 printf("\033[1;31m");
-                printf("Signature du matin:");
+                printf("\tSignature du matin:");
                 printf("\033[0m");
                 printf(" signée!\n");
             }
             else
             {
                 printf("\033[1;31m");
-                printf("Signature du matin:");
+                printf("\tSignature du matin:");
                 printf("\033[0m");
                 printf(" aucune information.\n");
             }
@@ -193,14 +196,14 @@ void printTime()
             if (strcmp(s2, "1") == 0)
             {
                 printf("\033[1;31m");
-                printf("Signature du soir:");
+                printf("\tSignature du soir:");
                 printf("\033[0m");
                 printf("  signée!\n\n\n\n");
             }
             else
             {
                 printf("\033[1;31m");
-                printf("Signature du soir:");
+                printf("\tSignature du soir:");
                 printf("\033[0m");
                 printf("  aucune information.\n\n\n\n");
             }
