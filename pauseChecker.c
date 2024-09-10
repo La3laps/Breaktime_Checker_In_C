@@ -12,18 +12,17 @@ int verifySignAM = 0;
 int verifySignPM = 0;
 
 void print(int choice);
-void createTime();
-void printTime(int hour, int min, int sec);
+int createTime();
+void printTime();
 
 int main()
 {
-    createTime();
-    printTime(hour, min, sec);
+    printTime();
 
     return 0;
 }
 
-void createTime()
+int createTime()
 {
 
     time_t s, val = 1;
@@ -35,13 +34,15 @@ void createTime()
     hour = current_time->tm_hour;
     min = current_time->tm_min;
     sec = current_time->tm_sec;
+    return hour, min, sec;
 }
 
-void printTime(int hour, int min, int sec)
+void printTime()
 {
     while (1)
     {
         clear();
+        createTime();
 
         if (verifySignAM == 0 && hour == 10 && min > 0 && min < 30)
         {
@@ -62,7 +63,6 @@ void printTime(int hour, int min, int sec)
                 printf("\n Toujours pas ? y/n\n");
                 printf("\033[0m");
                 scanf(" %c", &sign);
-
                 if (sign == 'y')
                 {
 
@@ -86,7 +86,6 @@ void printTime(int hour, int min, int sec)
             printf("\n As-tu signé? y/n\n");
             printf("\033[0m");
             scanf(" %c", &sign);
-
             while (sign != 'y')
             {
                 printf("\033[1;31m");
