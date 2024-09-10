@@ -160,7 +160,7 @@ void printTime()
         {
             print(2);
         }
-        else if (hour >= 16 && min >= 43 && hour < 24 || hour >= 17 && hour < 24)
+        else if (hour >= 16 && min > 43 && hour < 24 || hour >= 17 && hour < 24)
         {
             print(3);
             storeSignature(1, 1);
