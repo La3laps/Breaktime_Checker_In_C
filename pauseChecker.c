@@ -153,7 +153,7 @@ void printTime()
             storeSignature(1, 0);
         }
 
-        else if (hour == 10 && min > 29 && min < 46 || hour == 15 && min >= 0 && min < 31)
+        else if (hour == 10 && min > 29 && min < 46 || hour == 15 && min >= 0 && min < 16)
         {
             print(1);
         }
