@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include "shutdown.h"
 
 #define clear() printf("\033[H\033[J")
 
@@ -23,6 +24,7 @@ int storeSignature(int signAMorPM, int reset);
 
 int main()
 {
+    shutDown();
     printTime();
 
     return 0;

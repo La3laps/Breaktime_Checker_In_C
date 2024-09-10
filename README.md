@@ -1,4 +1,4 @@
-# Remi's branch
+# Check if it is break time (and more) at Le Campus Numérique !
 
 Pause Checker made by Yaman and Rémi at Le Campus Numérique to get a reminder if it is time to go on a break or not/to do our daily signature or not.
 
