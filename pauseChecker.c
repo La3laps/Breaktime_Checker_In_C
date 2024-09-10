@@ -24,7 +24,6 @@ int storeSignature(int signAMorPM, int reset);
 
 int main()
 {
-    shutDown();
     printTime();
 
     return 0;
@@ -40,7 +39,7 @@ int createTime()
     // to get current time
     current_time = localtime(&s);
     day = current_time->tm_mday;
-    hour = current_time->tm_hour;
+    hour = 17; // current_time->tm_hour;
     min = current_time->tm_min;
     sec = current_time->tm_sec;
     return hour, min, sec;
@@ -161,10 +160,11 @@ void printTime()
         {
             print(2);
         }
-        else if (hour >= 16 && min >= 45 && hour < 24 || hour >= 17 && hour < 24)
+        else if (hour >= 16 && min >= 43 && hour < 24 || hour >= 17 && hour < 24)
         {
             print(3);
             storeSignature(1, 1);
+            shutDown();
         }
         else
         {

@@ -4,40 +4,52 @@
 #include <stdlib.h>
 #define clear() printf("\033[H\033[J")
 
-void shutDown (){
+void shutDown()
+{
+    printf("\033[0;33m");
+    printf("\n\n\tDo you want to turn off your pc (y/n) ? \n\t");
+    printf("\033[0m");
 
-    printf("Do you want to turn off your pc (y/n) ? \n");
     char answer;
     scanf(" %c", &answer);
     int seconds = 10;
-    if (answer == 'y'){
-        printf("Save your files and close your navigation windows, your pc will shutdown in..\n");
-        
+    if (answer == 'y')
+    {
+
         int seconds = 59;
-        
-        while (seconds != 0 ){
+
+        while (seconds != 0)
+        {
             clear();
-            printf(" %02d ", seconds);
+            printf("\033[1;31m");
+            printf("\n\n\tSave your files and close your navigation windows, your pc will shutdown in..\n");
+            printf("\033[0m");
+            printf("\n\n\n\t %02d \n\n", seconds);
             seconds--;
-            if (seconds == 10){
-                /**** print à demain */
+            if (seconds < 10)
+            {
+                printf("\n\n");
+                printf("\033[1;31m");
+                printf("\t########################################################################\n");
+                printf("\t##  ===-  -==-  =   =  =   =  -===   -===  -==-  ==  ==-  -===  -===  ##\n");
+                printf("\t##  |  |  |  |  |\\  |  |\\  |  |      |     |  |  ||  |  | |     |     ##\n");
+                printf("\t##  -==   |  |  | \\ |  | \\ |  |==    -==-  |  |  ||  |=-  |==   |==   ##\n");
+                printf("\t##  |  |  |  |  |  \\|  |  \\|  |         |  |  |  ||  | \\  |     |     ##\n");
+                printf("\t##  ===-  -==-  =   =  =   =  -===   ===-  -==-  ==  =  = -===  -===  ##\n");
+                printf("\t########################################################################\n");
+                printf("\033[0m");
             }
-            if (seconds == 0){
+            if (seconds == 0)
+            {
                 system("shutdown -P now");
             }
             fflush(stdout);
             sleep(1);
             clear();
         }
-    } else {
-        printf("Bonne jouirnée \n");
+    }
+    else
+    {
+        printf("\tLe PC ne sera pas redémarré. \n");
     }
 }
-
-/*int main () {
-
-    shutDown();
-
-    return 0;
-}*/
-
