@@ -182,8 +182,9 @@ void printTime()
             {
                 printf("\033[1;31m");
                 printf("\tSignature du matin:");
-                printf("\033[0m");
+                printf("\033[0;32m");
                 printf(" signée!\n");
+                printf("\033[0m");
             }
             else
             {
@@ -197,8 +198,9 @@ void printTime()
             {
                 printf("\033[1;31m");
                 printf("\tSignature du soir:");
-                printf("\033[0m");
+                printf("\033[0;32m");
                 printf("  signée!\n\n\n\n");
+                printf("\033[0m");
             }
             else
             {
