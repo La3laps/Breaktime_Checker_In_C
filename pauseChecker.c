@@ -81,6 +81,11 @@ void printTime()
         clear();
         createTime();
 
+        if (hour == 10 && min > 29 && min < 46 || hour == 15 && min >= 0 && min < 16)
+        {
+            print(1);
+        }
+
         if (hour > 0 && hour < 10 && min <= 30)
         {
             storeSignature(1, 1);
@@ -152,77 +157,73 @@ void printTime()
             storeSignature(1, 0);
         }
 
-        else if (hour == 10 && min > 29 && min < 46 || hour == 15 && min >= 0 && min < 16)
-        {
-            print(1);
-        }
-        else if (hour == 12 && min > 29 || hour == 13 && min < 16)
+        if (hour == 12 && min > 29 || hour == 13 && min < 16)
         {
             print(2);
         }
-        else if (hour >= 16 && min > 43 && hour < 24 || hour >= 17 && hour < 24)
+
+        if (hour >= 16 && min > 43 && hour < 24 || hour >= 17 && hour < 24)
         {
             print(3);
             storeSignature(1, 1);
             shutDown();
         }
+
+        s1_file = fopen("signatures/s1.txt", "r");
+        s2_file = fopen("signatures/s2.txt", "r");
+
+        char s1[2];
+        char s2[2];
+
+        fgets(s1, 2, s1_file);
+        fgets(s2, 2, s2_file);
+
+        // print time in minutes, hours and seconds
+        printf("\n\n\n\n\t\t\t\t  %02d", hour);
+        printf("\033[1;31m");
+        printf(" : ");
+        printf("\033[0m");
+        printf("%02d", min);
+        printf("\033[0m");
+        printf("\033[1;31m");
+        printf(" : ");
+        printf("\033[0m");
+        printf("%02d\n\n\n\n\n\n\n\n", sec);
+
+        if (strcmp(s1, "1") == 0)
+        {
+            printf("\033[1;31m");
+            printf("\tSignature du matin:");
+            printf("\033[0;32m");
+            printf(" signée!\n");
+            printf("\033[0m");
+        }
         else
         {
-            s1_file = fopen("signatures/s1.txt", "r");
-            s2_file = fopen("signatures/s2.txt", "r");
-
-            char s1[2];
-            char s2[2];
-
-            fgets(s1, 2, s1_file);
-            fgets(s2, 2, s2_file);
-
-            // print time in minutes, hours and seconds
-            printf("\n\n\n\n\t\t\t\t  %02d", hour);
             printf("\033[1;31m");
-            printf(" : ");
+            printf("\tSignature du matin:");
             printf("\033[0m");
-            printf("%02d", min);
-            printf("\033[0m");
-            printf("\033[1;31m");
-            printf(" : ");
-            printf("\033[0m");
-            printf("%02d\n\n\n\n\n\n\n\n", sec);
-
-            if (strcmp(s1, "1") == 0)
-            {
-                printf("\033[1;31m");
-                printf("\tSignature du matin:");
-                printf("\033[0;32m");
-                printf(" signée!\n");
-                printf("\033[0m");
-            }
-            else
-            {
-                printf("\033[1;31m");
-                printf("\tSignature du matin:");
-                printf("\033[0m");
-                printf(" aucune information.\n");
-            }
-
-            if (strcmp(s2, "1") == 0)
-            {
-                printf("\033[1;31m");
-                printf("\tSignature du soir:");
-                printf("\033[0;32m");
-                printf("  signée!\n\n\n\n");
-                printf("\033[0m");
-            }
-            else
-            {
-                printf("\033[1;31m");
-                printf("\tSignature du soir:");
-                printf("\033[0m");
-                printf("  aucune information.\n\n\n\n");
-            }
-            fclose(s1_file);
-            fclose(s2_file);
+            printf(" aucune information.\n");
         }
+
+        if (strcmp(s2, "1") == 0)
+        {
+            printf("\033[1;31m");
+            printf("\tSignature du soir:");
+            printf("\033[0;32m");
+            printf("  signée!\n\n\n\n");
+            printf("\033[0m");
+        }
+        else
+        {
+            printf("\033[1;31m");
+            printf("\tSignature du soir:");
+            printf("\033[0m");
+            printf("  aucune information.\n\n\n\n");
+        }
+        fclose(s1_file);
+        fclose(s2_file);
+
         fflush(stdout);
 
         sec++;
