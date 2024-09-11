@@ -48,7 +48,7 @@ int createTime()
 int storeSignature(int signAMorPM, int reset)
 {
     s1_file = fopen("signatures/s1.txt", "w");
-    s2_file = fopen("signatures/s1.txt", "w");
+    s2_file = fopen("signatures/s2.txt", "w");
 
     if (s1_file == NULL)
     {
