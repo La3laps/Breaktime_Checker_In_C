@@ -39,8 +39,8 @@ int createTime()
     // to get current time
     current_time = localtime(&s);
     day = current_time->tm_mday;
-    hour = current_time->tm_hour;
-    min = current_time->tm_min;
+    hour = 16; // current_time->tm_hour;
+    min = 40;  // current_time->tm_min;
     sec = current_time->tm_sec;
     return hour, min, sec;
 }
@@ -230,7 +230,7 @@ void checkConditionsOfDay()
     {
         print(2);
     }
-    else if (hour >= 16 && min > 43 && hour < 24 || hour >= 17 && hour < 24)
+    else if (hour >= 16 && min >= 40 && hour < 24 || hour >= 17 && hour < 24)
     {
         print(3);
         storeSignature(1, 1);
