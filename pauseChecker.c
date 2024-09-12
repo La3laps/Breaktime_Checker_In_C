@@ -39,8 +39,8 @@ int createTime()
     // to get current time
     current_time = localtime(&s);
     day = current_time->tm_mday;
-    hour = 16; // current_time->tm_hour;
-    min = 40;  // current_time->tm_min;
+    hour = current_time->tm_hour;
+    min = current_time->tm_min;
     sec = current_time->tm_sec;
     return hour, min, sec;
 }
@@ -153,7 +153,7 @@ void print(int choice)
 void checkConditionsOfDay()
 {
     // Verifies if user signed for the morning
-    if (verifySignAM == 0 && hour == 10 && min >= 0 && min < 31)
+    if (verifySignAM == 0 && hour == 10 && min >= 45 && min <= 59)
     {
 
         print(4);
@@ -188,7 +188,7 @@ void checkConditionsOfDay()
         storeSignature(0, 0);
     }
     // Verifies if user signed for the afternoon
-    else if (verifySignPM == 0 && hour == 15 && min >= 0 && min < 31)
+    else if (verifySignPM == 0 && hour == 15 && min >= 16 && min <= 45)
     {
         print(4);
         printf("\n");
