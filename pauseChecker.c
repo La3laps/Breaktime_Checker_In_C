@@ -17,15 +17,24 @@ int verifySignPM = 0;
 FILE *s1_file; // read only
 FILE *s2_file; // write only
 
+// print certain texts (like "pause", or "signature") on stdout.
 void print(int choice);
+
+// gets current machine time
 int createTime();
-void printTime();
+
+// prints everything depending on conditions of day
+void printAll();
+
+// checks for pauses, signature, lunch break
 void checkConditionsOfDay();
+
+// store signatures for morning/evening (signAMorPM) or resets them if needed
 int storeSignature(int signAMorPM, int reset);
 
 int main()
 {
-    printTime();
+    printAll();
     return 0;
 }
 
@@ -38,6 +47,8 @@ int createTime()
     s = time(NULL);
     // to get current time
     current_time = localtime(&s);
+
+    // creates time
     day = current_time->tm_mday;
     hour = current_time->tm_hour;
     min = current_time->tm_min;
@@ -47,51 +58,60 @@ int createTime()
 
 int storeSignature(int signAMorPM, int reset)
 {
-    s1_file = fopen("signatures/s1.txt", "w");
-    s2_file = fopen("signatures/s2.txt", "w");
 
-    if (s1_file == NULL)
+    // SignAmorPM == 0 means morning
+    if (signAMorPM == 0)
     {
-
-        printf("Impossible d'accéder au dossier \"/signatures\". Les signatures ne s'afficheront pas à la fermeture du programme");
-        return 1;
-    }
-
-    if (signAMorPM == 0 && reset == 0)
-    {
+        s1_file = fopen("signatures/s1.txt", "w");
+        // changes content of s1.txt to "1"
         fprintf(s1_file, "1");
+        fclose(s1_file);
     }
-    if (signAMorPM == 1 && reset == 0)
+    // SignAmorPM == 1 means evening
+    else if (signAMorPM == 1)
     {
+        s2_file = fopen("signatures/s2.txt", "w");
+        // changes content of s2.txt to "1"
         fprintf(s2_file, "1");
+        fclose(s2_file);
     }
+    // reset == 1 turns the text files with "1" in them to "0"
     else if (reset == 1)
     {
+        s1_file = fopen("signatures/s1.txt", "w");
+        s2_file = fopen("signatures/s2.txt", "w");
+        // changes content of s1.txt and s2.txt to "0"
         fprintf(s1_file, "0");
         fprintf(s2_file, "0");
+        fclose(s1_file);
+        fclose(s2_file);
     }
-    fclose(s1_file);
-    fclose(s2_file);
 }
 
-void printTime()
+void printAll()
 {
     while (1)
     {
+        // clears screen linux/windows
         clear();
         system("clear");
+
+        // gets current time
         createTime();
 
+        // check for morning (before 9:30AM) to reset signature
         if (hour > 0 && hour < 10 && min <= 30)
         {
             storeSignature(1, 1);
         }
+
+        // prints different things to stdout depending on time of day/signature
         checkConditionsOfDay();
 
+        // flush stdout
         fflush(stdout);
 
-        sec++;
-
+        // keeps screen from flickering
         sleep(1);
     }
 }
@@ -101,7 +121,7 @@ void print(int choice)
     switch (choice)
     {
     case 1:
-
+        // print(1) prints "PAUSE"
         printf("\033[0;36m");
         printf("\t####################################\n");
         printf("\t##  ===-  -==-  =  =  -===  -===  ##\n");
@@ -113,6 +133,7 @@ void print(int choice)
         printf("\033[0m");
         break;
     case 2:
+        // print(2) prints "PAUSE MIAM"
         printf("\033[0;36m");
         printf("\t###############################################################\n");
         printf("\t##  ===-  -==-  =  =  -===  -===     =  =   ==   -==-  =  =  ##\n");
@@ -124,6 +145,7 @@ void print(int choice)
         printf("\033[0m");
         break;
     case 3:
+        // print(3) prints "FIN DE JOURNEE"
         printf("\033[0;33m");
         printf("\t#################################################################################\n");
         printf("\t##  ====  ==  =   =    ==-   -===    ==== -==-  =  =  ===\\  =   =  -===  -===  ##\n");
@@ -135,6 +157,7 @@ void print(int choice)
         printf("\033[0m");
         break;
     case 4:
+        // print(4) prints "SIGNATURE"
         printf("\033[1;31m");
         printf("\t#############################################################\n");
         printf("\t##  -===  ==  -===  =   =  -==-  ====  =  =  ===\\   -===   ##\n");
@@ -152,13 +175,14 @@ void print(int choice)
 
 void checkConditionsOfDay()
 {
-    // Verifies if user signed for the morning
+    // Checks if user hasn't signed for the morning
     if (verifySignAM == 0 && hour == 10 && min >= 45 && min <= 59)
     {
 
         print(4);
         printf("\n");
 
+        // ask user for input on signature
         char sign;
 
         printf("\033[1;31m");
@@ -166,6 +190,7 @@ void checkConditionsOfDay()
         printf("\033[0m");
         scanf(" %c", &sign);
 
+        // following while runs if user does not answer "y"
         while (sign != 'y')
         {
 
@@ -180,25 +205,29 @@ void checkConditionsOfDay()
                 storeSignature(0, 0);
             }
         }
+        // following code runs if signed
         clear();
         printf("\033[0;32m");
-        printf("\t\t\t\t     Noice!\n\n\n\n");
+        printf("\n\n\n\n\t\t\t\t  A signé pour le matin.\n\n\n\n");
         printf("\033[0m");
+        // stores signature for morning
         verifySignAM = 1;
         storeSignature(0, 0);
     }
-    // Verifies if user signed for the afternoon
+    // Checks if user hasn't signed for the afternoon
     else if (verifySignPM == 0 && hour == 15 && min >= 16 && min <= 45)
     {
         print(4);
         printf("\n");
 
         char sign;
-
+        // ask user for input on signature
         printf("\033[1;31m");
         printf("\n As-tu signé? y/n\n");
         printf("\033[0m");
         scanf(" %c", &sign);
+
+        // following while runs if user does not answer "y"
         while (sign != 'y')
         {
             printf("\033[1;31m");
@@ -213,10 +242,12 @@ void checkConditionsOfDay()
                 storeSignature(1, 0);
             }
         }
+        // following code runs if signed
         clear();
         printf("\033[0;32m");
-        printf("\t\t\t\t     Noice!\n\n\n\n");
+        printf("\n\n\n\n\t\t\t\t  A signé pour l'après-midi.\n\n\n\n");
         printf("\033[0m");
+        // stores signature for afternoon
         verifySignPM = 1;
         storeSignature(1, 0);
     }
@@ -233,7 +264,6 @@ void checkConditionsOfDay()
     else if (hour >= 16 && min >= 40 && hour < 24 || hour >= 17 && hour < 24)
     {
         print(3);
-        storeSignature(1, 1);
         shutDown();
     }
     else
