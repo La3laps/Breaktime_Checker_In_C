@@ -60,7 +60,7 @@ int storeSignature(int signAMorPM, int reset)
 {
 
     // SignAmorPM == 0 means morning
-    if (signAMorPM == 0)
+    if (signAMorPM == 0 && reset == 0)
     {
         s1_file = fopen("signatures/s1.txt", "w");
         // changes content of s1.txt to "1"
@@ -68,7 +68,7 @@ int storeSignature(int signAMorPM, int reset)
         fclose(s1_file);
     }
     // SignAmorPM == 1 means evening
-    else if (signAMorPM == 1)
+    else if (signAMorPM == 1 && reset == 0)
     {
         s2_file = fopen("signatures/s2.txt", "w");
         // changes content of s2.txt to "1"
